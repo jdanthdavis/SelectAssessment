@@ -18,7 +18,7 @@ function App() {
   const getData = async (fetch = '/') => {
     try {
       const gotData = await axios.get(
-        `https://select-assessment-4ddb2ccc56ef.herokuapp.com/${fetch}`
+        `https://select-assessment-4ddb2ccc56ef.herokuapp.com${fetch}`
       );
       setData(gotData.data);
       setLoading(false);

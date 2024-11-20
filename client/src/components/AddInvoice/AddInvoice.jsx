@@ -4,7 +4,7 @@ import IncButton from '../IncButton/IncButton';
 import './AddInvoice.css';
 
 const inputs = {
-  invoice_number: 'number',
+  invoice_number: 'text',
   currency: 'text',
   total: 'text',
   invoice_date: 'date',
@@ -50,7 +50,10 @@ const AddInvoice = ({ getData }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (!/^\d+$/.test(value)) {
+    if (
+      (name === 'total' && !/^\d+$/.test(value)) ||
+      (name === 'invoice_number' && !/^\d+$/.test(value))
+    ) {
       return;
     }
 
@@ -84,18 +87,6 @@ const AddInvoice = ({ getData }) => {
   };
 
   /**
-   * Checks if the input is numeric
-   * @param {*} fieldName
-   * @param {*} fieldValue
-   * @param {*} errorMessages
-   */
-  const isNumeric = (fieldName, fieldValue, errorMessages) => {
-    if (!/^\d+$/.test(fieldValue)) {
-      errorMessages[fieldName] = 'Numeric inputs only';
-    }
-  };
-
-  /**
    * checks if the input has a value
    * @param {*} fieldName
    * @param {*} fieldValue
@@ -114,7 +105,6 @@ const AddInvoice = ({ getData }) => {
   const validateInputs = () => {
     let errorMessages = { ...errors };
 
-    isNumeric('invoice_number', newInvoiceData.invoice_number, errorMessages);
     hasValue('total', newInvoiceData.total, errorMessages);
     hasValue('currency', newInvoiceData.currency, errorMessages);
     hasValue('invoice_date', newInvoiceData.invoice_date, errorMessages);
@@ -152,7 +142,7 @@ const AddInvoice = ({ getData }) => {
       setNewInvoiceData({
         invoice_number: '',
         total: '',
-        currency: '',
+        currency: 'USD',
         invoice_date: '',
         due_date: '',
         vendor_name: '',
