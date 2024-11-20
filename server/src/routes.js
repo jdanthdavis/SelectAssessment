@@ -2,8 +2,21 @@ const express = require('express');
 const Invoice = require('./models/Invoices');
 const router = express.Router();
 
-// get all invoices
+// get all pending invoices
 router.get('/', async (req, res) => {
+  try {
+    const invoices = await Invoice.find(
+      { status: 'pending' },
+      'invoice_number total currency invoice_date due_date vendor_name remittance_address status'
+    );
+    res.json(invoices);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch pending invoices' });
+  }
+});
+
+// get all invoices
+router.get('/getAll', async (req, res) => {
   try {
     const invoices = await Invoice.find(
       {},
@@ -11,7 +24,7 @@ router.get('/', async (req, res) => {
     );
     res.json(invoices);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch invoices' });
+    res.status(500).json({ error: 'Failed to fetch all invoices' });
   }
 });
 
@@ -61,6 +74,22 @@ router.put('/', async (req, res) => {
       .json({ message: 'Invoice submitted successfully.', updatedInvoice });
   } catch (err) {
     res.status(400).json({ error: 'Failed to update invoice' });
+  }
+});
+
+// delete an invoice
+router.delete('/invoices/:id', async (req, res) => {
+  try {
+    const invoiceId = req.params.id;
+    const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
+
+    if (!deletedInvoice) {
+      return res.status(404).json({ error: 'Invoice not found' });
+    }
+
+    res.json({ message: 'Invoice deleted successfully', deletedInvoice });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete invoice' });
   }
 });
 

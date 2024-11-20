@@ -40,6 +40,14 @@ const InvoiceTable = ({
     });
   };
 
+  if (data?.length === 0) {
+    return (
+      <div>
+        <p>No pending records available.</p>
+      </div>
+    );
+  }
+
   return (
     <div className={`table-container ${showStatus ? 'status' : ''}`}>
       <div className="header">
@@ -91,33 +99,30 @@ const InvoiceTable = ({
           </div>
         )}
       </div>
-      {data.map(
-        (data, index) =>
-          (data.status === 'pending' || showStatus) && (
-            <div
-              className={`row ${index % 2 === 0 ? 'even' : 'odd'}`}
-              key={data._id}
-            >
-              <>
-                <div className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    checked={checkedItems.includes(data._id)}
-                    onChange={() => handleCheckboxChange(data._id)}
-                  />
-                </div>
-                <div>{data.invoice_number}</div>
-                <div>{data.total}</div>
-                <div>{data.currency}</div>
-                <div>{data.invoice_date.split('T')[0]}</div>
-                <div>{data.due_date.split('T')[0]}</div>
-                <div>{data.vendor_name}</div>
-                <div>{data.remittance_address}</div>
-                {showStatus && <div>{data.status}</div>}
-              </>
+      {data.map((data, index) => (
+        <div
+          className={`row ${index % 2 === 0 ? 'even' : 'odd'}`}
+          key={data._id}
+        >
+          <>
+            <div className="checkbox-container">
+              <input
+                type="checkbox"
+                checked={checkedItems.includes(data._id)}
+                onChange={() => handleCheckboxChange(data._id)}
+              />
             </div>
-          )
-      )}
+            <div>{data.invoice_number}</div>
+            <div>{data.total}</div>
+            <div>{data.currency}</div>
+            <div>{data.invoice_date.split('T')[0]}</div>
+            <div>{data.due_date.split('T')[0]}</div>
+            <div>{data.vendor_name}</div>
+            <div>{data.remittance_address}</div>
+            {showStatus && <div>{data.status}</div>}
+          </>
+        </div>
+      ))}
     </div>
   );
 };
