@@ -41,7 +41,9 @@ router.post('/', async (req, res) => {
     });
 
     const savedInvoice = await newInvoice.save();
-    res.status(201).json(savedInvoice);
+    res
+      .status(201)
+      .json({ message: 'Invoice added successfully.', savedInvoice });
   } catch (err) {
     res.status(400).json({ error: 'Failed to create invoice' });
   }
@@ -54,7 +56,9 @@ router.put('/', async (req, res) => {
     const updatedInvoice = await Invoice.findOneAndUpdate({ _id }, req.body, {
       new: true,
     });
-    res.json(updatedInvoice);
+    res
+      .status(200)
+      .json({ message: 'Invoice submitted successfully.', updatedInvoice });
   } catch (err) {
     res.status(400).json({ error: 'Failed to update invoice' });
   }
