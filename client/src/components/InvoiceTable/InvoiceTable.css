@@ -2,6 +2,12 @@
   display: grid;
   grid-template-columns: 30px repeat(7, 1fr);
   margin: 20px;
+  overflow-y: auto;
+
+  &.status {
+    grid-template-columns: 30px repeat(8, 1fr);
+    height: 300px;
+  }
 }
 
 .table-container .header,
@@ -37,4 +43,21 @@
 .checkbox-container {
   display: flex;
   justify-content: center;
+}
+
+.header-cell {
+  display: flex;
+  align-items: center;
+}
+
+.sort-btn {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: unset;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: unset;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import IncButton from '../IncButton/IncButton';
 import './AddInvoice.css';
 
 const inputs = {
@@ -14,10 +15,12 @@ const inputs = {
 
 /**
  * A component that renders an input field to insert new invoices
+ * @param {*} param0
  * @returns
  */
 const AddInvoice = ({ getData }) => {
   const [errors, setErrors] = useState({});
+  const [btnLoading, setBtnLoading] = useState(false);
   const [newInvoiceData, setNewInvoiceData] = useState({
     invoice_number: '',
     total: '',
@@ -46,18 +49,34 @@ const AddInvoice = ({ getData }) => {
     }
   };
 
+  /**
+   * Checks if the input is numeric
+   * @param {*} fieldName
+   * @param {*} fieldValue
+   * @param {*} errorMessages
+   */
   const isNumeric = (fieldName, fieldValue, errorMessages) => {
     if (!/^\d+$/.test(fieldValue)) {
       errorMessages[fieldName] = 'Numeric inputs only';
     }
   };
 
+  /**
+   * checks if the input has a value
+   * @param {*} fieldName
+   * @param {*} fieldValue
+   * @param {*} errorMessages
+   */
   const hasValue = (fieldName, fieldValue, errorMessages) => {
     if (!fieldValue) {
       errorMessages[fieldName] = 'Required';
     }
   };
 
+  /**
+   * Validates all the input fields
+   * @returns
+   */
   const validateInputs = () => {
     let errorMessages = { ...errors };
 
@@ -87,10 +106,11 @@ const AddInvoice = ({ getData }) => {
    */
   const addInvoice = async () => {
     if (validateInputs()) return;
+    setBtnLoading(true);
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/',
+        'https://select-assessment-4ddb2ccc56ef.herokuapp.com/',
         newInvoiceData
       );
       console.log('Invoice created:', response.data);
@@ -108,6 +128,7 @@ const AddInvoice = ({ getData }) => {
 
       // gets all the invoices in the db again
       getData();
+      setBtnLoading(false);
     } catch (error) {
       console.error('Error creating invoice:', error);
     }
@@ -140,7 +161,11 @@ const AddInvoice = ({ getData }) => {
             </>
           );
         })}
-        <button onClick={addInvoice}>Add Invoice</button>
+        <IncButton
+          text={'Add Invoice'}
+          onClick={addInvoice}
+          loading={btnLoading}
+        />
       </div>
       <div />
     </div>
