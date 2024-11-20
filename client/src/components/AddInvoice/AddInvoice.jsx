@@ -17,6 +17,7 @@ const inputs = {
  * @returns
  */
 const AddInvoice = ({ getData }) => {
+  const [errors, setErrors] = useState({});
   const [newInvoiceData, setNewInvoiceData] = useState({
     invoice_number: '',
     total: '',
@@ -36,6 +37,48 @@ const AddInvoice = ({ getData }) => {
       ...newInvoiceData,
       [name]: value,
     });
+
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: '',
+      }));
+    }
+  };
+
+  const isNumeric = (fieldName, fieldValue, errorMessages) => {
+    if (!/^\d+$/.test(fieldValue)) {
+      errorMessages[fieldName] = 'Numeric inputs only';
+    }
+  };
+
+  const hasValue = (fieldName, fieldValue, errorMessages) => {
+    if (!fieldValue) {
+      errorMessages[fieldName] = 'Required';
+    }
+  };
+
+  const validateInputs = () => {
+    let errorMessages = { ...errors };
+
+    isNumeric('invoice_number', newInvoiceData.invoice_number, errorMessages);
+    isNumeric('total', newInvoiceData.total, errorMessages);
+    isNumeric('currency', newInvoiceData.currency, errorMessages);
+
+    hasValue('invoice_date', newInvoiceData.invoice_date, errorMessages);
+    hasValue('due_date', newInvoiceData.due_date, errorMessages);
+    hasValue('vendor_name', newInvoiceData.vendor_name, errorMessages);
+    hasValue(
+      'remittance_address',
+      newInvoiceData.remittance_address,
+      errorMessages
+    );
+
+    setErrors(errorMessages);
+    return (
+      Object.values(errorMessages).includes('Required') ||
+      Object.values(errorMessages).includes('Numeric inputs only')
+    );
   };
 
   /**
@@ -43,6 +86,8 @@ const AddInvoice = ({ getData }) => {
    * @returns
    */
   const addInvoice = async () => {
+    if (validateInputs()) return;
+
     try {
       const response = await axios.post(
         'http://localhost:3000/',
@@ -79,24 +124,23 @@ const AddInvoice = ({ getData }) => {
         </div>
         {Object.entries(inputs).map(([label, type]) => {
           return (
-            <div key={label} className="input-container">
-              <label>{label}: </label>
-              {/* //TODO: need validation for numeric inputs */}
-              <input
-                type={type}
-                name={label}
-                onChange={handleChange}
-                value={newInvoiceData[label]}
-              />
-            </div>
+            <>
+              <div key={label} className="input-container">
+                <label>{label}: </label>
+                <input
+                  className={`${label} input ${errors[label] ? 'error' : ''}`}
+                  type={type}
+                  name={label}
+                  onChange={handleChange}
+                  onBlur={handleChange}
+                  value={newInvoiceData[label]}
+                  placeholder={errors[label]}
+                />
+              </div>
+            </>
           );
         })}
-        <button
-          onClick={addInvoice}
-          disabled={!newInvoiceData.remittance_address}
-        >
-          Add Invoice
-        </button>
+        <button onClick={addInvoice}>Add Invoice</button>
       </div>
       <div />
     </div>
