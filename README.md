@@ -39,8 +39,8 @@ As a member of the accounting team I need to see a list of invoices that have be
 
 
 ### Acceptance criteria
-1. Create an interface using React that shows a list of unapproved invoices that are submitted via API described in user story #1.
-2. Display the following fields for each invoice:"Invoice Number", "Vendor Name", "Vendor Address", "Invoice Total", "Invoice Date", "Due Date"
-3. Create a solution that allows the user to select and approve invoices. Once an invoice is "Approved" it should dissappear from the list of available invoices.
-4. When the user approves an invoice the "status" property for that invoice should be updated to "Approved"
-5. When an invoice is submitted via the API from user story #1, it should populate in the list of displayed invoices without requiring the user to manually refresh the list of invoices.
+~~1. Create an interface using React that shows a list of unapproved invoices that are submitted via API described in user story #1.~~
+~~2. Display the following fields for each invoice:"Invoice Number", "Vendor Name", "Vendor Address", "Invoice Total", "Invoice Date", "Due Date"~~
+~~3. Create a solution that allows the user to select and approve invoices. Once an invoice is "Approved" it should dissappear from the list of available invoices.~~
+~~4. When the user approves an invoice the "status" property for that invoice should be updated to "Approved"~~
+~~5. When an invoice is submitted via the API from user story #1, it should populate in the list of displayed invoices without requiring the user to manually refresh the list of invoices.~~
