@@ -5,8 +5,8 @@ import './AddInvoice.css';
 
 const inputs = {
   invoice_number: 'number',
-  total: 'number',
-  currency: 'number',
+  currency: 'text',
+  total: 'text',
   invoice_date: 'date',
   due_date: 'date',
   vendor_name: 'text',
@@ -24,7 +24,7 @@ const AddInvoice = ({ getData }) => {
   const [newInvoiceData, setNewInvoiceData] = useState({
     invoice_number: '',
     total: '',
-    currency: '',
+    currency: 'USD',
     invoice_date: '',
     due_date: '',
     vendor_name: '',
@@ -32,10 +32,28 @@ const AddInvoice = ({ getData }) => {
   });
 
   /**
+   * Format USD currency
+   * @param {*} value
+   * @param {*} currency
+   * @returns
+   */
+  const formatToCurrency = (value, currency) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency.toUpperCase(),
+    }).format(value);
+  };
+
+  /**
    * Updates the corresponding input
    */
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (!/^\d+$/.test(value)) {
+      return;
+    }
+
     setNewInvoiceData({
       ...newInvoiceData,
       [name]: value,
@@ -46,6 +64,22 @@ const AddInvoice = ({ getData }) => {
         ...prevErrors,
         [name]: '',
       }));
+    }
+  };
+
+  /**
+   * Handles onBlur for the total field
+   */
+  const handleBlur = () => {
+    if (newInvoiceData.total && newInvoiceData.currency === 'USD') {
+      const formattedValue = formatToCurrency(
+        parseFloat(newInvoiceData.total.replace(/[^0-9.-]+/g, '')), // Remove non-numeric characters
+        newInvoiceData.currency
+      );
+      setNewInvoiceData({
+        ...newInvoiceData,
+        total: formattedValue,
+      });
     }
   };
 
@@ -81,9 +115,8 @@ const AddInvoice = ({ getData }) => {
     let errorMessages = { ...errors };
 
     isNumeric('invoice_number', newInvoiceData.invoice_number, errorMessages);
-    isNumeric('total', newInvoiceData.total, errorMessages);
-    isNumeric('currency', newInvoiceData.currency, errorMessages);
-
+    hasValue('total', newInvoiceData.total, errorMessages);
+    hasValue('currency', newInvoiceData.currency, errorMessages);
     hasValue('invoice_date', newInvoiceData.invoice_date, errorMessages);
     hasValue('due_date', newInvoiceData.due_date, errorMessages);
     hasValue('vendor_name', newInvoiceData.vendor_name, errorMessages);
@@ -153,7 +186,7 @@ const AddInvoice = ({ getData }) => {
                   type={type}
                   name={label}
                   onChange={handleChange}
-                  onBlur={handleChange}
+                  onBlur={label === 'total' && handleBlur}
                   value={newInvoiceData[label]}
                   placeholder={errors[label]}
                 />

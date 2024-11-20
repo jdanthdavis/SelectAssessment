@@ -6,9 +6,9 @@ import './IncButton.css';
  * @param {*} param0
  * @returns
  */
-const IncButton = ({ text, onClick, loading = false }) => {
+const IncButton = ({ text, onClick, loading = false, disabled = false }) => {
   return (
-    <button onClick={onClick}>
+    <button disabled={disabled} onClick={onClick}>
       {loading ? (
         <PulseLoader
           color={'white'}
