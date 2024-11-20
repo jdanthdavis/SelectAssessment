@@ -11,8 +11,8 @@ Fork this repo and push the code to your new forked repo. Submit the forked repo
 As a trucking company providing freight services for Select Transport I need to submit invoices via an API in order to receive payment in a timely manner.
 
 ### Acceptance criteria
-1. The API accepts JSON formatted HTTP POST requests at the route '/Invoice'
-The following is a sample Invoice request that will be submitted to the API endpoint.
+~~1. The API accepts JSON formatted HTTP POST requests at the route '/Invoice'
+The following is a sample Invoice request that will be submitted to the API endpoint.~~
 ```javascript
 {
   "invoice_number": "12345",
@@ -25,14 +25,14 @@ The following is a sample Invoice request that will be submitted to the API endp
 }
 ```
 
-2. The API returns an HTTP 200 Response code and the following message body
+~~2. The API returns an HTTP 200 Response code and the following message body~~
 
 ```javascript
 {
   "message": "invoice submitted successfully"
 }
 ```
-3. Store the invoices in a data store of your choice with an additional property and value "status": "pending" 
+~~3. Store the invoices in a data store of your choice with an additional property and value "status": "pending"~~
 
 ## User story 2
 As a member of the accounting team I need to see a list of invoices that have been submitted by vendors, but have not yet been approved for payment so that I can review and approve them.
