@@ -1,35 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import axios from 'axios';
+import { InvoiceTable, AddInvoice } from './components/Index';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  const getData = async () => {
+    try {
+      const gotData = await axios.get('http://localhost:3000/');
+      setData(gotData.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error creating invoice:', error);
+    }
+  };
+
+  const approveInvoice = async () => {
+    try {
+      const updateInvoice = checkedItems.map(async (id) => {
+        const invoiceToUpdate = {
+          _id: id,
+          status: 'approved',
+        };
+
+        const approve = await axios.put(
+          'http://localhost:3000/',
+          invoiceToUpdate
+        );
+        return approve.data;
+      });
+      const results = await Promise.all(updateInvoice);
+      console.log('The following invoices were updated: ', results);
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (loading) {
+    getData();
+    return <div>Loading...</div>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="table-wrapper">
+      <div className="invoice-table-container">
+        <InvoiceTable
+          data={data}
+          setCheckedItems={setCheckedItems}
+          checkedItems={checkedItems}
+        />
+        <div className="btn-container">
+          <button
+            disabled={!checkedItems.length}
+            onClick={() => approveInvoice()}
+          >
+            Approve Selected Invoices
+          </button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="add-invoice-container">
+        <AddInvoice getData={getData} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
