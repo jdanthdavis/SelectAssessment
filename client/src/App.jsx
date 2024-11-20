@@ -11,7 +11,9 @@ function App() {
 
   const getData = async () => {
     try {
-      const gotData = await axios.get('http://localhost:3000/');
+      const gotData = await axios.get(
+        'https://select-assessment-4ddb2ccc56ef.herokuapp.com/'
+      );
       setData(gotData.data);
       setLoading(false);
     } catch (error) {
@@ -28,7 +30,7 @@ function App() {
         };
 
         const approve = await axios.put(
-          'http://localhost:3000/',
+          'https://select-assessment-4ddb2ccc56ef.herokuapp.com/',
           invoiceToUpdate
         );
         return approve.data;

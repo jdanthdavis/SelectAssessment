@@ -90,7 +90,7 @@ const AddInvoice = ({ getData }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/',
+        'https://select-assessment-4ddb2ccc56ef.herokuapp.com/',
         newInvoiceData
       );
       console.log('Invoice created:', response.data);
