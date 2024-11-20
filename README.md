@@ -1,46 +1,43 @@
-# SelectAssessment
-A programming assessment for prospective Select Transport Partners team members.
+# Overview
 
-The business analyst assigned to your sprint team has presented you with two user stories to complete this sprint. This assessment asks you to complete these story cards to the best of your ability. 
+## Frontend
 
-The assessment is more about creating a working solution that meets as many of the acceptance criteria as possible than it is about getting every detail perfect. It is not necessary to complete every acceptance criteria to submit the assessment. Complete what you can and leave "TODO:" comments with appropriate placeholder instructions anywhere you are unable to complete your code. You must turn in the assessment by the end of the third day after you are given the assessment.
+Built with Vite & React while being hosted on Netlify.
 
-Fork this repo and push the code to your new forked repo. Submit the forked repo's URL to greg@goselect.com.
+## Backend
 
-## User story 1
-As a trucking company providing freight services for Select Transport I need to submit invoices via an API in order to receive payment in a timely manner.
+Built with Node.js, Express, and MongoDB while being hosted on Heroku.
 
-### Acceptance criteria
-~~1. The API accepts JSON formatted HTTP POST requests at the route '/Invoice'
-The following is a sample Invoice request that will be submitted to the API endpoint.~~
-```javascript
-{
-  "invoice_number": "12345",
-  "total": "199.99",
-  "currency": "USD",
-  "invoice_date": "2019-08-17",
-  "due_date": "2019-09-17",
-  "vendor_name": "Acme Trucking Inc.",
-  "remittance_address": "123 ABC St. Charlotte, NC 28209"
-}
-```
+# Enhancements
 
-~~2. The API returns an HTTP 200 Response code and the following message body~~
+## Table filtering
 
-```javascript
-{
-  "message": "invoice submitted successfully"
-}
-```
-~~3. Store the invoices in a data store of your choice with an additional property and value "status": "pending"~~
+Allows the user to filter each column in either ascending or descending order.
 
-## User story 2
-As a member of the accounting team I need to see a list of invoices that have been submitted by vendors, but have not yet been approved for payment so that I can review and approve them.
+## View All Invoice Statuses
 
+To verify invoice status was correctly updated there is a button that will display the `statuses` for every invoice. This can be toggled to hide or show all `statuses`.
 
-### Acceptance criteria
-~~1. Create an interface using React that shows a list of unapproved invoices that are submitted via API described in user story #1.~~
-~~2. Display the following fields for each invoice:"Invoice Number", "Vendor Name", "Vendor Address", "Invoice Total", "Invoice Date", "Due Date"~~
-~~3. Create a solution that allows the user to select and approve invoices. Once an invoice is "Approved" it should dissappear from the list of available invoices.~~
-~~4. When the user approves an invoice the "status" property for that invoice should be updated to "Approved"~~
-~~5. When an invoice is submitted via the API from user story #1, it should populate in the list of displayed invoices without requiring the user to manually refresh the list of invoices.~~
+## Loading states
+
+Various loading states for entire components and buttons when call to actions are clicked.
+
+## Invoice Creation
+
+An input field that allows a user to add a new invoice. Every field is equipped with validation and does not allow submission if any errors are present. All fields are **required**. Upon submission a `POST` is sent and the table is refreshed to grab the newest invoice.
+
+- `invoice_number` - numeric only
+- `total` - numeric only
+- `currency` -numeric only
+- `invoice_date` - mm/dd/yyyy
+- `due_date` - mm/dd/yyyy
+- `vendor_name` - any
+- `remittance_address` - any
+
+# Libraries
+
+- [Axios](https://www.npmjs.com/package/axios)
+- [React-Spinners](https://www.npmjs.com/package/react-spinners)
+- [Express](https://www.npmjs.com/package/express)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
+- [CORs](https://www.npmjs.com/package/cors)
