@@ -40,7 +40,7 @@ function App() {
         };
 
         const approve = await axios.put(
-          'http://localhost:3000/',
+          'https://select-assessment-4ddb2ccc56ef.herokuapp.com/',
           invoiceToUpdate
         );
         return approve.data;
