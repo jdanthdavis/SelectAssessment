@@ -1,0 +1,14 @@
+.add-invoice-wrapper {
+    border: 1px solid white;
+}
+
+.add-invoice-container {
+    min-width: 350px;
+    margin: 20px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
