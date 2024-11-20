@@ -78,7 +78,7 @@ router.put('/', async (req, res) => {
 });
 
 // delete an invoice
-router.delete('/invoices/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const invoiceId = req.params.id;
     const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
