@@ -1,4 +1,5 @@
 # Overview
+[View live application](https://select-assessment.netlify.app/)
 
 ## Frontend
 
@@ -21,6 +22,12 @@ To verify invoice status was correctly updated there is a button that will displ
 ## Loading states
 
 Various loading states for entire components and buttons when call to actions are clicked.
+
+## Currency Formatting
+Formats USD currency onBlur. Does not require the user to enter $, ., or ,.
+
+## Invoice Deletion
+Allows the user to delete selected invoice(s) when viewing *all* invoices.
 
 ## Invoice Creation
 
