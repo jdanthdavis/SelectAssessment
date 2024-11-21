@@ -17,17 +17,17 @@ Allows the user to filter each column in either ascending or descending order.
 
 ## View All Invoice Statuses
 
-To verify invoice status was correctly updated there is a button that will display the `statuses` for every invoice. This can be toggled to hide or show all `statuses`.
+To verify an invoice status was correctly updated there is a button that will display the `statuses` for every invoice. This can be toggled to hide or show all `statuses`.
 
 ## Loading states
 
-Various loading states for entire components and buttons when call to actions are clicked.
+Various `loading` states for entire components and buttons when call to actions are clicked.
 
 ## Currency Formatting
-Formats USD currency onBlur. Does not require the user to enter $, ., or ,.
+Formats `USD` currency `onBlur`. Does not require the user to enter `$, ., .`
 
 ## Invoice Deletion
-Allows the user to delete selected invoice(s) when viewing *all* invoices.
+Allows the user to `delete` selected invoice(s) when viewing *all* invoices.
 
 ## Invoice Creation
 
@@ -35,7 +35,7 @@ An input field that allows a user to add a new invoice. Every field is equipped 
 
 - `invoice_number` - numeric only
 - `total` - numeric only
-- `currency` -numeric only
+- `currency` - Defaulted to USD - any
 - `invoice_date` - mm/dd/yyyy
 - `due_date` - mm/dd/yyyy
 - `vendor_name` - any
